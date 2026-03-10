@@ -7,7 +7,15 @@ class Task(Base):
 
     __tablename__="todo"
 
-    id = Column(Integer,primary_key=True)
+    id = Column(Integer,autoincrement=True,primary_key=True)
     name = Column(String)
     description = Column(String)
     
+class User(Base):
+    
+    __tablename__="Users"
+    
+    id = Column(Integer,autoincrement=True,primary_key=True)
+    login= Column(String)
+    password= Column(String)
+    token= Column(String)

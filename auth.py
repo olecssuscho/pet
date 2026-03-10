@@ -6,10 +6,10 @@ from fastapi.security import OAuth2AuthorizationCodeBearer
 
 SUPER_SECRET_KEY="Your secret key"
 ALGORIPHM="HS256"
-TIME_LIVE="30"
+TIME_LIVE=30
 
 contex=CryptContext(schemes=["bcrypt"],deprecated = "auto")
-user_shema= OAuth2AuthorizationCodeBearer(tokenUrl="login")
+user_shema= OAuth2AuthorizationCodeBearer(authorizationUrl="/login",tokenUrl="login")
 
 def hash_password(password):
     return contex.hash(password)
@@ -21,9 +21,9 @@ def check_password(password, hashpassword):
         return "wrong password"
     
 def create_token(data: dict):
-    to_encode = data.copy()
-    execute_to=datetime.utcnow() + timedelta(minutes=TIME_LIVE)
-    to_encode.update({"exp":execute_to})
+    to_encode = data.dict()
+    expire=datetime.utcnow() + timedelta(minutes=TIME_LIVE)
+    to_encode.update({"exp":expire})
     return jwt.encode(to_encode,SUPER_SECRET_KEY,ALGORIPHM)
 
 def decode_token(token:str):
