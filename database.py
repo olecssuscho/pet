@@ -5,3 +5,10 @@ db_url="postgresql://postgres:123qwe@localhost:5432"
 engine=create_engine(db_url)
 
 SessionLocal=sessionmaker(autoflush=False,autocommit=False,bind=engine)
+
+def get_db():
+    db=SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close
