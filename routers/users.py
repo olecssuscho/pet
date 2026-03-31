@@ -1,4 +1,4 @@
-from fastapi import Depends,APIRouter,Form,HTTPException
+from fastapi import Depends,APIRouter,Form,HTTPException,Request
 from database import get_db
 from dbmodels import User
 from models import UserModels
@@ -7,6 +7,10 @@ from sqlalchemy.orm import Session
 from auth import create_token,check_password,hash_password
 
 router=APIRouter()
+
+@router.get("/user/get")
+def get_users(db: Session = Depends(get_db)):
+    return db.query(dbmodels.User).all()
 
 @router.post("/user/login")
 def login(user:UserModels,db: Session=Depends(get_db)):
@@ -34,11 +38,11 @@ def delete_all(db:Session=Depends(get_db)):
     return "Sucsses"
 
 @router.post("/login")
-def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+def login_to_accses(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.login == username).first()
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
     if check_password(password, user.password) != "Verify completed":
         raise HTTPException(status_code=400, detail="Wrong password")
-    token = create_token({"login":user.login,"password":user.password})
+    token = create_token({"login":user.login})
     return {"access_token": token, "token_type": "bearer"}

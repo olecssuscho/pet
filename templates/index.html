@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <title>Title</title>
+</head>
+<body>
+    <p>Tasks</p>
+    <form hx-post="/task_list" hx-target="#tasks" hx-swap="innerHTML" 
+    hx-on:htmx:after-request="this.reset()">
+        <input type="text" name="name" placeholder="Enter Name of task">
+        <input type="text" name="description" placeholder="Enter Description of task">
+        <button type="submit">Add task</button>
+    </form>
+    <ul id="tasks" hx-get="/task_list" hx-trigger="load" hx-swap="innerHTML"></ul>
+</body>
+</html>
