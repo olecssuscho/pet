@@ -19,13 +19,13 @@ def check_password(password :str, compare_password :str):
     
 def create_token(data: dict):
     to_encode = data.copy()
-    expire=datetime.utcnow() + timedelta(minutes=settings.TIME_LIVE)
+    expire=datetime.utcnow() + timedelta(minutes=settings.TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp":expire})
-    return jwt.encode(to_encode,settings.SUPER_SECRET_KEY,settings.ALGORIPHM)
+    return jwt.encode(to_encode,settings.SECRET_KEY,settings.ALGORITHM)
 
 def decode_token(token:str):
     try:
-        payload = jwt.decode(token,settings.SUPER_SECRET_KEY,[settings.ALGORIPHM])
+        payload = jwt.decode(token,settings.SECRET_KEY,[settings.ALGORITHM])
         return payload
     except JWTError:
         return None

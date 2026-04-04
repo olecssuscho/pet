@@ -1,4 +1,4 @@
-from fastapi import Depends,APIRouter,Form,HTTPException
+from fastapi import Depends,APIRouter,Form,HTTPException,status
 from database import get_db
 from dbmodels import User
 from models import UserModels
@@ -15,6 +15,8 @@ def get_users(password:str=Depends(user_shema),db: Session = Depends(get_db)):
 
 @router.post("/user/register")
 def login(user:UserModels,db: Session=Depends(get_db)):
+    if db.query(dbmodels.User.login).filter(User.login==user.login).first():
+        return HTTPException(status_code=status.HTTP_409_CONFLICT,detail="Login is used")
     token=create_token({"login":user.login})
     newpassword=hash_password(user.password)
     user.password=newpassword
