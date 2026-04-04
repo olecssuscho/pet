@@ -27,9 +27,9 @@ def login_to_accses(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessio
     user_db = db.query(User).filter(User.login == form_data.username).first()
     if not user_db:
         raise HTTPException(status_code=400, detail="User not found")
-    if check_password(form_data.password,user_db.password) != "Verify completed":
+    if not check_password(form_data.password,user_db.password):
         raise HTTPException(status_code=400, detail="Wrong password")
-    return f"Welcome {form_data.username}"
+    return {"access_token": user_db.token, "token_type": "bearer"}
 
 @router.delete("/user/delete_user")
 def delete_user(id:int,password:str=Depends(user_shema),db:Session=Depends(get_db)):

@@ -6,10 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from database import get_db
 from dbmodels import User
-
-SUPER_SECRET_KEY="Your secret key"
-ALGORIPHM="HS256"
-TIME_LIVE=30
+from config import settings
 
 contex=CryptContext(schemes=["argon2", "bcrypt"],deprecated = "auto")
 user_shema= OAuth2PasswordBearer(tokenUrl="/user/sing_up")
@@ -18,20 +15,17 @@ def hash_password(password:str):
     return contex.hash(password)
 
 def check_password(password :str, compare_password :str):
-    if contex.verify(password,compare_password):
-        return "Verify completed"
-    else:
-        return "Wrong password"
+    return contex.verify(password,compare_password)
     
 def create_token(data: dict):
     to_encode = data.copy()
-    expire=datetime.utcnow() + timedelta(minutes=TIME_LIVE)
+    expire=datetime.utcnow() + timedelta(minutes=settings.TIME_LIVE)
     to_encode.update({"exp":expire})
-    return jwt.encode(to_encode,SUPER_SECRET_KEY,ALGORIPHM)
+    return jwt.encode(to_encode,settings.SUPER_SECRET_KEY,settings.ALGORIPHM)
 
 def decode_token(token:str):
     try:
-        payload = jwt.decode(token,SUPER_SECRET_KEY,[ALGORIPHM])
+        payload = jwt.decode(token,settings.SUPER_SECRET_KEY,[settings.ALGORIPHM])
         return payload
     except JWTError:
         return None
