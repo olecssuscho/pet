@@ -1,13 +1,13 @@
 {% for task in tasks %}
     <li>
-    <form hx-put="/task_list/{{task.id}}" hx-target="#tasks" hx-swap="innerHTML" method="post" >
-        <input type="hidden" name="id" value="{{task.id}}" hx-trigger="keyup changed delay=250ms"  >
-        <input type="text" name="name" value="{{task.name}}" hx-trigger="keyup changed delay=250ms" >
-        <input type="text" name="description" value="{{task.description}}" hx-trigger="keyup changed delay=250ms" >
-        <button type="submit">Edit task</button>
-    </form>
-    <form hx-delete="/task_list/{{task.id}}" hx-target="#tasks" hx-swap="innerHTML" method="post">
-        <button type="submit">Delete task</button>
-    </form>
+        <form class="task_put" hx-put="/task_list/{{task.id}}" hx-target="#tasks" hx-swap="innerHTML" method="post" >
+            <input class="task_input" type="hidden" name="id" value="{{task.id}}" hx-trigger="keyup changed delay=250ms"  >
+            <input class="task_input" type="text" name="name" value="{{task.name}}" hx-trigger="keyup changed delay=250ms" >
+            <input class="task_input" type="text" name="description" value="{{task.description}}" hx-trigger="keyup changed delay=250ms" >
+            <button class="task_button" type="submit">Edit task</button>
+        </form>
+        <form class="task_delete" hx-delete="/task_list/{{task.id}}" hx-target="#tasks" hx-swap="innerHTML" method="post">
+            <button class="task_button" type="submit">Delete task</button>
+        </form>
     </li>
 {% endfor %}

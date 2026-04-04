@@ -1,0 +1,30 @@
+body{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#tasks{
+    flex: 1;             
+  overflow-y: auto;
+}
+.task_post {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.task_input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.task_button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}

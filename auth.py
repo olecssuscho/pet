@@ -12,17 +12,16 @@ ALGORIPHM="HS256"
 TIME_LIVE=30
 
 contex=CryptContext(schemes=["argon2", "bcrypt"],deprecated = "auto")
-user_shema= OAuth2PasswordBearer(tokenUrl="/login")
+user_shema= OAuth2PasswordBearer(tokenUrl="/user/sing_up")
 
 def hash_password(password:str):
     return contex.hash(password)
 
 def check_password(password :str, compare_password :str):
-    hashpassword=hash_password(compare_password)
-    if contex.verify(password,hashpassword):
+    if contex.verify(password,compare_password):
         return "Verify completed"
     else:
-        return "wrong password"
+        return "Wrong password"
     
 def create_token(data: dict):
     to_encode = data.copy()
