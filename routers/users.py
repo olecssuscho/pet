@@ -5,7 +5,9 @@ from models import UserModels
 import dbmodels
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from auth import create_token,check_password,hash_password,user_shema
+from auth import create_access_token,check_password,hash_password,user_shema,create_refresh_token,decode_token
+from config import settings
+from datetime import datetime ,timedelta
 
 router=APIRouter()
 
@@ -17,20 +19,23 @@ def get_users(password:str=Depends(user_shema),db: Session = Depends(get_db)):
 def login(user:UserModels,db: Session=Depends(get_db)):
     if db.query(dbmodels.User.login).filter(User.login==user.login).first():
         return HTTPException(status_code=status.HTTP_409_CONFLICT,detail="Login is used")
-    token=create_token({"login":user.login})
+    access_token=create_access_token({"login":user.login})
     newpassword=hash_password(user.password)
     user.password=newpassword
-    db.add(User(**user.model_dump(),token=token))
+    db.add(User(**user.model_dump(),token=access_token))
     db.commit()
-    return token
+    return access_token
 
-@router.post("/user/sing_up")
+@router.post("/user/login")
 def login_to_accses(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user_db = db.query(User).filter(User.login == form_data.username).first()
+    decode_user=decode_token(user_db.token)
     if not user_db:
         raise HTTPException(status_code=400, detail="User not found")
     if not check_password(form_data.password,user_db.password):
         raise HTTPException(status_code=400, detail="Wrong password")
+    if not decode_user:
+       user_db.token = create_refresh_token({"login":form_data.username})
     return {"access_token": user_db.token, "token_type": "bearer"}
 
 @router.delete("/user/delete_user")

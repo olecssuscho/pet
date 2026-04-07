@@ -26,7 +26,9 @@ def add_to_db(task:TaskModels,token:str=Depends(user_shema),db: Session=Depends(
 @router.put("/task/put")
 def Update(id:int,task:TaskModels,token:str=Depends(user_shema),db: Session=Depends(get_db)):
     db_task=db.query(dbmodels.Task).filter(dbmodels.Task.id==id).first()
-    if db_task:
+    payload=decode_token(token)
+    user_id=(db.query(dbmodels.User.id).filter(dbmodels.User.login==payload["login"]).first()[0])
+    if db_task.user_id==user_id:
         db_task.name=task.name
         db_task.description=task.description
         db_task.status=task.status
