@@ -1,6 +1,6 @@
 from fastapi import FastAPI,Request
 from database import engine
-import dbmodels
+import shemas.dbmodels as dbmodels
 from routers import tasks,users
 import uvicorn
 from fastapi.responses import JSONResponse
