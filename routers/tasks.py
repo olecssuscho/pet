@@ -7,24 +7,23 @@ from services.tasks import get_tasks_server,add_to_db_server,update_server,delet
 router=APIRouter()
 
 @router.get("/task/get_all")
-def get_tasks(token:str=Depends(user_shema),db: Session = Depends(get_db)):
-    return get_tasks_server(token,db)
+def get_tasks(user:str=Depends(get_current_user),db: Session = Depends(get_db)):
+    return get_tasks_server(user.id,db)
     
-
 @router.post("/task/post")
-def add_to_db(task:TaskModels,token:str=Depends(user_shema),db: Session=Depends(get_db)):
-    return add_to_db_server(task,token,db)
+def add_to_db(task:TaskModels,user:str=Depends(get_current_user),db: Session=Depends(get_db)):
+    return add_to_db_server(task,user.id,db)
 
 @router.put("/task/put")
-def Update(id:int,task:TaskModels,token:str=Depends(user_shema),db: Session=Depends(get_db)):
-    return update_server(id,task,token,db)
+def Update(id:int,task:TaskModels,user:str=Depends(get_current_user),db: Session=Depends(get_db)):
+    return update_server(id,task,user.id,db)
 
 @router.delete("/task/delete")
-def delete_from_db(id: int,token:str=Depends(user_shema),db: Session=Depends(get_db)):
-    return delete_from_db_server(id,token,db)
+def delete_from_db(id: int,user:str=Depends(get_current_user),db: Session=Depends(get_db)):
+    return delete_from_db_server(id,user.id,db)
 
 @router.delete("/task/delete_all")
-def delete_from_db(token:str=Depends(user_shema),db: Session=Depends(get_db)):
-    return delete_from_db_all_server(token,db)
+def delete_from_db(user:str=Depends(get_current_user),db: Session=Depends(get_db)):
+    return delete_from_db_all_server(user.id,db)
 
 
