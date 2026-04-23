@@ -1,8 +1,9 @@
+import _asyncio
 from fastapi import Depends,APIRouter
 from dependensy import get_db,user_shema,get_current_user
 from shemas.models import TaskModels
 from sqlalchemy.orm import Session
-from services.tasks import get_tasks_server,add_to_db_server,update_server,delete_from_db_server,delete_from_db_all_server
+from services.tasks import get_tasks_server,add_to_db_server,update_server,delete_from_db_server
 
 router=APIRouter()
 
@@ -22,8 +23,5 @@ def Update(id:int,task:TaskModels,user:str=Depends(get_current_user),db: Session
 def delete_from_db(id: int,user:str=Depends(get_current_user),db: Session=Depends(get_db)):
     return delete_from_db_server(id,user.id,db)
 
-@router.delete("/task/delete_all")
-def delete_from_db(user:str=Depends(get_current_user),db: Session=Depends(get_db)):
-    return delete_from_db_all_server(user.id,db)
 
 

@@ -21,4 +21,6 @@ def get_current_user(token:str=Depends(user_shema), db: Session = Depends(get_db
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     else:
         user=db.query(User).filter(User.login == payload["login"]).first()
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User with that credentials no found")
         return user

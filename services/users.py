@@ -7,10 +7,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from security import create_access_token,check_password,hash_password,create_refresh_token,decode_token
 
-def get_users_service(user:int,db: Session = Depends(get_db)):
+def get_users_service(user:int,db: Session):
     return db.query(dbmodels.User.login).all()
 
-def login_service(user:UserModels,db: Session=Depends(get_db)):
+def login_service(user:UserModels,db: Session):
     if db.query(dbmodels.User.login).filter(User.login==user.login).first():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,detail="Login is used")
     access_token=create_access_token({"login":user.login})
@@ -31,7 +31,7 @@ def login_to_accses_service(form_data: OAuth2PasswordRequestForm = Depends(), db
        user_db.token = create_refresh_token({"login":form_data.username})
     return {"access_token": user_db.token, "token_type": "bearer"}
 
-def delete_user_service(id:int,user:int,db:Session=Depends(get_db)):
+def delete_user_service(id:int,user:int,db:Session):
     db_deleted=db.query(dbmodels.User).filter(dbmodels.User.id==id).first()
     if db_deleted:
         db.delete(db_deleted)
@@ -40,7 +40,3 @@ def delete_user_service(id:int,user:int,db:Session=Depends(get_db)):
         return"Wrong id"
     return"Sucsses"
 
-def delete_all_service(user:int,db:Session=Depends(get_db)):
-    db.query(dbmodels.User).delete()
-    db.commit()
-    return "Sucsses"

@@ -3,7 +3,7 @@ from dependensy import get_db,get_current_user
 from shemas.models import UserModels
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from services.user import *
+from services.users import *
 
 router=APIRouter()
 
@@ -23,6 +23,4 @@ def login_to_accses(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessio
 def delete_user(id:int,user:str=Depends(get_current_user),db:Session=Depends(get_db)):
     return delete_user_service(id,user,db)
 
-@router.delete("/user/deleteall")
-def delete_all(user:str=Depends(get_current_user),db:Session=Depends(get_db)):
-    return delete_all_service(user,db)
+
