@@ -1,0 +1,58 @@
+2026-04-28 19:09:56 DEBUG loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-04-28 19:09:56 DEBUG loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-04-28 19:09:56 DEBUG loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-04-28 19:09:56 DEBUG registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-04-28 19:09:56 DEBUG registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[0:8]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[9:15]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[16:24]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[25:31]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_end with no data
+2026-04-28 19:09:57 DEBUG detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-04-28 19:09:57 INFO HTTP Request: POST http://testserver/user/login "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 INFO HTTP Request: GET http://testserver/task/get_all "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[0:8]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[9:15]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[16:24]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[25:31]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_end with no data
+2026-04-28 19:09:57 INFO HTTP Request: POST http://testserver/user/login "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 INFO HTTP Request: POST http://testserver/task/post "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[0:8]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[9:15]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[16:24]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[25:31]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_end with no data
+2026-04-28 19:09:57 INFO HTTP Request: POST http://testserver/user/login "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 INFO HTTP Request: PUT http://testserver/task/post?id=74 "HTTP/1.1 405 Method Not Allowed"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[0:8]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[9:15]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_start with no data
+2026-04-28 19:09:57 DEBUG Calling on_field_name with data[16:24]
+2026-04-28 19:09:57 DEBUG Calling on_field_data with data[25:31]
+2026-04-28 19:09:57 DEBUG Calling on_field_end with no data
+2026-04-28 19:09:57 DEBUG Calling on_end with no data
+2026-04-28 19:09:57 INFO HTTP Request: POST http://testserver/user/login "HTTP/1.1 200 OK"
+2026-04-28 19:09:57 DEBUG Using proactor: IocpProactor
+2026-04-28 19:09:57 INFO HTTP Request: DELETE http://testserver/task/delete?id=81 "HTTP/1.1 404 Not Found"

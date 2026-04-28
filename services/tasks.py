@@ -4,17 +4,20 @@ from shemas.models import TaskModels
 import shemas.dbmodels as dbmodels
 from sqlalchemy.orm import Session
 
-def get_tasks_server(user_id:int,db: Session): 
+def get_tasks_server(user_id:int,db: Session) -> TaskResponse: 
     return db.query(dbmodels.Task).filter(Task.user_id==user_id).all()
+    
 
 def add_to_db_server(task:TaskModels,user_id:int,db: Session):
-    db.add(Task(**task.model_dump(),user_id=user_id))
+    db_task = Task(**task.model_dump(),user_id=user_id)
+    db.add(db_task)
     db.commit()
-    return "Sucsses"
+    db.refresh(db_task)
+    return db_task
 
 def update_server(id:int,task:TaskModels,user_id:int,db: Session):
     db_task=db.query(dbmodels.Task).filter(dbmodels.Task.id==id).first()
-    if db_task ==None:
+    if not db_task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Task not found")
     if db_task.user_id==user_id:
         db_task.name=task.name
@@ -27,7 +30,7 @@ def update_server(id:int,task:TaskModels,user_id:int,db: Session):
     
 def delete_from_db_server(id: int,user_id:int,db: Session):
     db_deleted=db.query(dbmodels.Task).filter(dbmodels.Task.id==id).first()
-    if db_deleted ==None:
+    if not db_deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Task not found")
     if db_deleted.user_id==user_id:
         db.delete(db_deleted)

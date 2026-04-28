@@ -1,5 +1,5 @@
 from sqlalchemy import Column,Integer,String,ForeignKey,Enum
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 Base=declarative_base()
 class User(Base):
@@ -21,5 +21,4 @@ class Task(Base):
     description = Column(String)
     user_id=Column(Integer,ForeignKey(User.id),nullable=False)
     status=Column(String,Enum("in_progress","new","done",name="status"),default="new")
-
-    
+  

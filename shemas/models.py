@@ -11,3 +11,4 @@ class UserModels(BaseModel):
    
     login: str
     password: str
+
