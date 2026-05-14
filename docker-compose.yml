@@ -22,7 +22,7 @@ services:
       - "8000:8000"
     command: sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:123qwe@db:5432
+      - DATABASE_URL=postgresql://postgres:123qwe@db:5432/postgres
     depends_on:
       db:
         condition: service_healthy
