@@ -7,8 +7,8 @@ class User(Base):
     __tablename__="Users"
     
     id = Column(Integer,autoincrement=True,primary_key=True)
-    login= Column(String)
-    password= Column(String)
+    login = Column(String)
+    password = Column(String)
     token= Column(String)
 
     
@@ -19,6 +19,7 @@ class Task(Base):
     id = Column(Integer,autoincrement=True,primary_key=True)
     name = Column(String)
     description = Column(String)
-    user_id=Column(Integer,ForeignKey(User.id),nullable=False)
-    status=Column(String,Enum("in_progress","new","done",name="status"),default="new")
+    user_id = Column(Integer,ForeignKey(User.id),nullable=False)
+    status = Column(String,Enum("in_progress","new","done",name="status"),default="new")
+    priority = Column(String,Enum("low","medium","high",name="priority"),default="medium")
   

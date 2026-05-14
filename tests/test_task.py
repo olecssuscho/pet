@@ -7,6 +7,7 @@ user =TestClient(app)
 def test_get_tasks():
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
+
     task=user.get("/task/get_all",
                   headers={"Authorization":f"Bearer {token}"})
     assert task.status_code==200
@@ -50,3 +51,20 @@ def test_delete():
                     params={"id":task_id},
                     headers={"Authorization":f"Bearer {token}"})
     assert task.status_code ==200
+
+def test_productivity():
+    responce = user.post("/user/login", data={"username": "string", "password":"string"})
+    token=responce.json()["access_token"]
+
+    capacity=[]
+
+    for i in range(1000):
+        task=user.post("/task/post", 
+                   json={"name":"test","description":"test","status":"new"}, 
+                   headers={"Authorization":f"Bearer {token}"})
+        capacity.append(task.status_code)
+        task_id=task.json()["id"]
+        task=user.delete("/task/delete",
+                    params={"id":task_id},
+                    headers={"Authorization":f"Bearer {token}"})
+    assert all(200 for status in capacity)

@@ -7,7 +7,6 @@ from fastapi.responses import JSONResponse
 import logging
 app=FastAPI()
 
-dbmodels.Base.metadata.create_all(bind=engine)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
