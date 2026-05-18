@@ -3,6 +3,7 @@ from shemas.dbmodels import Task
 from shemas.models import TaskModels
 import shemas.dbmodels as dbmodels
 from sqlalchemy.orm import Session
+from shemas.responces import TaskResponse
 
 def get_tasks_server(user_id:int,db: Session) -> TaskResponse: 
     return db.query(dbmodels.Task).filter(Task.user_id==user_id).all()

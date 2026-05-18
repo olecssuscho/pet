@@ -67,4 +67,4 @@ def test_productivity():
         task=user.delete("/task/delete",
                     params={"id":task_id},
                     headers={"Authorization":f"Bearer {token}"})
-    assert all(200 for status in capacity)
+    assert all(status == 200 for status in capacity)
