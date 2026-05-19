@@ -1,5 +1,4 @@
-from fastapi import Depends,HTTPException,status
-from dependensy import get_db
+from fastapi import HTTPException,status
 from shemas.dbmodels import User
 from shemas.models import UserModels
 import shemas.dbmodels as dbmodels
@@ -12,8 +11,8 @@ from typing import List
 def get_users_service(db: Session) -> List[UserResponse]:
     return db.query(dbmodels.User).all()
 
-def get_me_service(user: User, db: Session) -> UserResponse:
-    return db.query(dbmodels.User).filter(dbmodels.User.id == user.id).first()
+def get_me_service(user: User) -> UserResponse:
+    return user
 
 def register_service(user:UserModels,db: Session):
     if db.query(dbmodels.User.login).filter(User.login==user.login).first():
@@ -48,7 +47,7 @@ def refresh_token_service(refresh_token: str,db: Session):
     decode_refresh_token=decode_token(refresh_token)
     if not decode_refresh_token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token")
-    if decode_refresh_token["type"]!="refresh":
+    if decode_refresh_token.get("type")!="refresh":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token")
     if db.query(User.login).filter(User.login==decode_refresh_token["login"]).first():
         access_token=create_access_token({"login":decode_refresh_token["login"]})

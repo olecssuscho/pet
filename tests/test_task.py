@@ -5,6 +5,7 @@ from main import app
 user =TestClient(app)
 
 def test_get_tasks():
+    user.post("/user/register", json={"login": "string", "password":"string"})
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
 
@@ -13,15 +14,17 @@ def test_get_tasks():
     assert task.status_code==200
 
 def test_add_to_db():
+    user.post("/user/register", json={"login": "string", "password":"string"})              
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
-    
+
     task=user.post("/task/post", 
                    json={"name":"test","description":"test","status":"new"}, 
                    headers={"Authorization":f"Bearer {token}"})
     assert task.status_code ==200
 
 def test_update():
+    user.post("/user/register", json={"login": "string", "password":"string"})
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
     
@@ -38,6 +41,7 @@ def test_update():
     assert task.status_code ==200
 
 def test_delete():
+    user.post("/user/register", json={"login": "string", "password":"string"})
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
     
@@ -53,6 +57,7 @@ def test_delete():
     assert task.status_code ==200
 
 def test_productivity():
+    user.post("/user/register", json={"login": "string", "password":"string"})
     responce = user.post("/user/login", data={"username": "string", "password":"string"})
     token=responce.json()["access_token"]
 

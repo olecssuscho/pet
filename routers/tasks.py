@@ -1,5 +1,5 @@
 from fastapi import Depends,APIRouter
-from dependensy import get_db,user_shema,get_current_user
+from dependensy import get_db,get_current_user
 from shemas.models import TaskModels
 from sqlalchemy.orm import Session
 from services.tasks import get_tasks_server,add_to_db_server,update_server,delete_from_db_server
