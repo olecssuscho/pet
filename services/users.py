@@ -9,8 +9,8 @@ from security import create_access_token,check_password,hash_password,create_ref
 from shemas.responces import UserResponse
 from typing import List
 
-def get_users_service(user:int,db: Session) -> List[UserResponse]:
-    return db.query(dbmodels.User).filter(dbmodels.User.id==user).all()
+def get_users_service(db: Session) -> List[UserResponse]:
+    return db.query(dbmodels.User).all()
 
 def register_service(user:UserModels,db: Session):
     if db.query(dbmodels.User.login).filter(User.login==user.login).first():
@@ -49,5 +49,7 @@ def refresh_token_service(refresh_token: str,db: Session):
     if db.query(User.login).filter(User.login==decode_refresh_token["login"]).first():
         access_token=create_access_token({"login":decode_refresh_token["login"]})
         return {"access_token": access_token, "token_type": "bearer"}
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User not found")
 
 

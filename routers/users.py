@@ -11,7 +11,7 @@ router=APIRouter()
 
 @router.get("/user/get_all",response_model=list[UserResponse])
 def get_users(user:User=Depends(get_current_user),db: Session = Depends(get_db)):
-    return get_users_service(user.id,db)
+    return get_users_service(db)
 
 @router.post("/user/register")
 def register(user:UserModels,db: Session=Depends(get_db)):
@@ -26,6 +26,6 @@ def delete_user(id:int,user:User=Depends(get_current_user),db:Session=Depends(ge
     return delete_user_service(id,user.id,db)
 
 @router.post("/user/refresh")
-def refresh_token(refresh_token: str = Depends(create_refresh_token), db: Session = Depends(get_db)):
+def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
     return refresh_token_service(refresh_token, db)
 
