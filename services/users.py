@@ -12,6 +12,9 @@ from typing import List
 def get_users_service(db: Session) -> List[UserResponse]:
     return db.query(dbmodels.User).all()
 
+def get_me_service(user: User, db: Session) -> UserResponse:
+    return db.query(dbmodels.User).filter(dbmodels.User.id == user.id).first()
+
 def register_service(user:UserModels,db: Session):
     if db.query(dbmodels.User.login).filter(User.login==user.login).first():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,detail="Login is used")
@@ -26,7 +29,6 @@ def login_to_accses_service(form_data: OAuth2PasswordRequestForm , db: Session )
     user_db = db.query(User).filter(User.login == form_data.username).first()
     if not user_db:
         raise HTTPException(status_code=400, detail="User not found")
-    decode_user=decode_token(user_db.token)
     if not check_password(form_data.password,user_db.password):
         raise HTTPException(status_code=400, detail="Wrong password")
     access_token=create_access_token({"login":user_db.login})
@@ -45,6 +47,8 @@ def delete_user_service(id:int,user:int,db:Session):
 def refresh_token_service(refresh_token: str,db: Session):
     decode_refresh_token=decode_token(refresh_token)
     if not decode_refresh_token:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token")
+    if decode_refresh_token["type"]!="refresh":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token")
     if db.query(User.login).filter(User.login==decode_refresh_token["login"]).first():
         access_token=create_access_token({"login":decode_refresh_token["login"]})

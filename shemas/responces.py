@@ -7,6 +7,7 @@ class TaskResponse(BaseModel):
    name: str
    description: str
    status: str  
+   priority: str
 
 
 class UserResponse(BaseModel):

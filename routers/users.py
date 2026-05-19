@@ -13,6 +13,10 @@ router=APIRouter()
 def get_users(user:User=Depends(get_current_user),db: Session = Depends(get_db)):
     return get_users_service(db)
 
+@router.get("/user/me", response_model=UserResponse)
+def get_me(user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+    return get_me_service(user, db)
+
 @router.post("/user/register")
 def register(user:UserModels,db: Session=Depends(get_db)):
     return register_service(user,db)
